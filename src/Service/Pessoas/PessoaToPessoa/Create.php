@@ -15,54 +15,6 @@ class Create
     private $objPessoaToPessoa  = NULL;
     private $objPessoaOrigem    = NULL;
     private $objPessoaDestino   = NULL;
-    
-    /**
-     * @return \App\Entity\Pessoas\PessoaToPessoa
-     */
-    public function getPessoaToPessoa()
-    {
-        return $this->objPessoaToPessoa;
-    }
-
-    /**
-     * @return \App\Entity\Pessoas\Pessoa
-     */
-    public function getPessoaOrigem()
-    {
-        return $this->objPessoaOrigem;
-    }
-
-    /**
-     * @return \App\Entity\Pessoas\Pessoa
-     */
-    public function getPessoaDestino()
-    {
-        return $this->objPessoaDestino;
-    }
-
-    /**
-     * @param \App\Entity\Pessoas\PessoaToPessoa $objPessoaToPessoa
-     */
-    public function setPessoaToPessoa(\App\Entity\Pessoas\PessoaToPessoa $objPessoaToPessoa)
-    {
-        $this->objPessoaToPessoa = $objPessoaToPessoa;
-    }
-
-    /**
-     * @param Ambigous <object, NULL> $objPessoaOrigem
-     */
-    public function setPessoaOrigem($objPessoaOrigem)
-    {
-        $this->objPessoaOrigem = $objPessoaOrigem;
-    }
-
-    /**
-     * @param Ambigous <object, NULL> $objPessoaDestino
-     */
-    public function setPessoaDestino($objPessoaDestino)
-    {
-        $this->objPessoaDestino = $objPessoaDestino;
-    }
 
     public function __construct(EntityManager $objEntityManager)
     {
@@ -166,6 +118,54 @@ class Create
                 throw new \RuntimeException('Pessoa Destino não localizada.');
             }
         }
+    }
+    
+    /**
+     * @return \App\Entity\Pessoas\PessoaToPessoa
+     */
+    public function getPessoaToPessoa()
+    {
+        return $this->objPessoaToPessoa;
+    }
+    
+    /**
+     * @return \App\Entity\Pessoas\Pessoa
+     */
+    public function getPessoaOrigem()
+    {
+        return $this->objPessoaOrigem;
+    }
+    
+    /**
+     * @return \App\Entity\Pessoas\Pessoa
+     */
+    public function getPessoaDestino()
+    {
+        return $this->objPessoaDestino;
+    }
+    
+    /**
+     * @param \App\Entity\Pessoas\PessoaToPessoa $objPessoaToPessoa
+     */
+    public function setPessoaToPessoa(\App\Entity\Pessoas\PessoaToPessoa $objPessoaToPessoa)
+    {
+        $this->objPessoaToPessoa = $objPessoaToPessoa;
+    }
+    
+    /**
+     * @param \App\Entity\Pessoas\Pessoa $objPessoaOrigem
+     */
+    public function setPessoaOrigem(\App\Entity\Pessoas\Pessoa $objPessoaOrigem)
+    {
+        $this->objPessoaOrigem = $objPessoaOrigem;
+    }
+    
+    /**
+     * @param \App\Entity\Pessoas\Pessoa $objPessoaDestino
+     */
+    public function setPessoaDestino(\App\Entity\Pessoas\Pessoa $objPessoaDestino)
+    {
+        $this->objPessoaDestino = $objPessoaDestino;
     }
     
     public function save()
