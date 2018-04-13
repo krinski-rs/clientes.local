@@ -1,0 +1,50 @@
+App\Entity\Pessoas\Pessoa:
+    type: entity
+    table: pessoas.pessoa
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        tipo:
+            type: pessoas.tipo_pessoa
+            nullable: false
+        nacionalidade:
+            type: pessoas.nacionalidade_pessoa
+            nullable: false
+        dataAniversario:
+            type: datetime
+            nullable: true
+            column: data_aniversario
+        dataCadastro:
+            type: datetime
+            nullable: false
+            options:
+                default: now()
+            column: data_cadastro
+        ativo:
+            type: boolean
+            nullable: false
+            options:
+                default: true
+    oneToMany:
+        nomes:
+            targetEntity: App\Entity\Pessoas\Nome
+            mappedBy: idPessoa
+            cascade:
+                - persist
+                - merge
+                - remove
+        enderecos:
+            targetEntity: App\Entity\Pessoas\Endereco
+            mappedBy: idPessoa
+            cascade:
+                - persist
+                - merge
+                - remove
+    lifecycleCallbacks: {  }

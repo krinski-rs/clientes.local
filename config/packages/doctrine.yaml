@@ -1,0 +1,58 @@
+parameters:
+    # Adds a fallback DATABASE_URL if the env var is not set.
+    # This allows you to run cache:warmup even if your
+    # environment variables are not available yet.
+    # You should not need to change this value.
+    env(DATABASE_URL): ''
+
+doctrine:
+    dbal:
+        default_connection: default
+        types:
+            pessoas.tipo_pessoa:
+                class:                App\DBAL\Type\Enum\Vogel\TipoPessoaType
+                commented:            true
+            pessoas.tipo_nome_pessoa:
+                class:                App\DBAL\Type\Enum\Vogel\TipoNomePessoaType
+                commented:            true
+            pessoas.tipo_endereco_pessoa:
+                class:                App\DBAL\Type\Enum\Vogel\TipoEnderecoPessoaType
+                commented:            true
+            pessoas.nacionalidade_pessoa:
+                class:                App\DBAL\Type\Enum\Vogel\NacionalidadePessoaType
+                commented:            true
+            pessoas.tipo_relacionamento_pessoa:
+                class:                App\DBAL\Type\Enum\Vogel\TipoRelacionamentoPessoaType
+                commented:            true
+            point:
+                class:                App\DBAL\Type\Spatial\Geometry\PointType
+                commented:            true
+        connections:
+            default:
+                driver:   '%env(resolve:VOGEL_DRIVER)%'
+                host:     '%env(resolve:VOGEL_HOST)%'
+                port:     '%env(resolve:VOGEL_PORT)%'
+                dbname:   '%env(resolve:VOGEL_DBNAME)%'
+                user:     '%env(resolve:VOGEL_USER)%'
+                password: '%env(resolve:VOGEL_PASSWORD)%'
+                charset:  '%env(resolve:VOGEL_CHARSET)%'
+                mapping_types:
+                    point: point
+                    tipo_pessoa: pessoas.tipo_pessoa
+                    tipo_nome_pessoa: pessoas.tipo_nome_pessoa
+                    tipo_endereco_pessoa: pessoas.tipo_endereco_pessoa
+                    nacionalidade_pessoa: pessoas.nacionalidade_pessoa
+                    tipo_relacionamento_pessoa: pessoas.tipo_relacionamento_pessoa
+                schema_filter: '/^(pessoas.)/'
+    orm:
+        default_entity_manager: default
+        entity_managers:
+            default:
+                connection: default
+                mappings:
+                    Pessoa:
+                        is_bundle: false
+                        type: yml
+                        dir: '%kernel.project_dir%/config/doctrine/pessoas'
+                        prefix: 'App\Entity\Pessoas'
+                        alias: App\Entity\Pessoas

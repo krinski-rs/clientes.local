@@ -1,0 +1,50 @@
+post_pessoa:
+    path: /
+    controller: 'App\Controller\Pessoas\PessoaController::postPessoa'
+    methods: [POST]
+    defaults:
+        _format: json
+        
+get_pessoa:
+    path: /{idPessoa}
+    controller: 'App\Controller\Pessoas\PessoaController::getPessoa'
+    methods: [GET]
+    defaults:
+        _format: json
+    requirements:
+        idPessoa: '\d+'
+        
+list_pessoa:
+    path: /
+    controller: 'App\Controller\Pessoas\PessoaController::getPessoas'
+    methods: [GET]
+    defaults:
+        _format: json
+        
+delete_pessoa:
+    path: /{idPessoa}
+    controller: 'App\Controller\Pessoas\PessoaController::deletePessoa'
+    methods: [DELETE]
+    defaults:
+        _format: json
+    requirements:
+        idPessoa: '\d+'
+        
+put_pessoa:
+    path: /{idPessoa}
+    controller: 'App\Controller\Pessoas\PessoaController::putPessoa'
+    methods: [PUT]
+    defaults:
+        _format: json
+    requirements:
+        idPessoa: '\d+'
+        
+patch_pessoa:
+    path: /{idPessoa}
+    controller: 'App\Controller\Pessoas\PessoaController::patchPessoa'
+    methods: [PATCH]
+    defaults:
+        _format: json
+    requirements:
+        idPessoa: '\d+'
+        

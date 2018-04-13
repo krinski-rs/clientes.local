@@ -1,0 +1,43 @@
+App\Entity\Pessoas\Nome:
+    type: entity
+    table: pessoas.nome
+    indexes:
+        IDX_8F82B363AE81E6F:
+            columns:
+                - id_pessoa
+    uniqueConstraints:
+        nome_pessoa_tipo_un:
+            columns:
+                - id_pessoa
+                - tipo
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: SEQUENCE
+    fields:
+        tipo:
+            type: pessoas.tipo_nome_pessoa
+            nullable: false
+        nome:
+            type: string
+            nullable: false
+            length: 255
+            options:
+                fixed: false
+    manyToOne:
+        idPessoa:
+            targetEntity: App\Entity\Pessoas\Pessoa
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                id_pessoa:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

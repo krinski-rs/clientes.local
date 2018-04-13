@@ -1,0 +1,3 @@
+pessoa:
+    prefix: /pessoa
+    resource: './pessoa/routes.yaml'

@@ -1,0 +1,41 @@
+App\Entity\Pessoas\PessoaToPessoa:
+    type: entity
+    table: pessoas.pessoa_to_pessoa
+    indexes:
+        IDX_DAD942506F46B572:
+            columns:
+                - pessoa_origem
+        IDX_DAD94250E7747ECD:
+            columns:
+                - pessoa_destino
+    id:
+        tipo:
+            type: pessoas.tipo_relacionamento_pessoa
+            nullable: false
+            id: true
+        pessoaOrigem:
+            associationKey: true
+        pessoaDestino:
+            associationKey: true
+    oneToOne:
+        pessoaOrigem:
+            targetEntity: App\Entity\Pessoas\Pessoa
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pessoa_origem:
+                    referencedColumnName: id
+            orphanRemoval: false
+        pessoaDestino:
+            targetEntity: App\Entity\Pessoas\Pessoa
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                pessoa_destino:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }
