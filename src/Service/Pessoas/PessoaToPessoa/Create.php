@@ -1,5 +1,5 @@
 <?php
-namespace App\Service\Pessoas\Nome;
+namespace App\Service\Pessoas\PessoaToPessoa;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;

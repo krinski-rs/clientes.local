@@ -6,7 +6,6 @@ use App\DBAL\Type\Spatial\GeometryType;
 /*
  * @author  Reinaldo Krinski <reinaldo.krinski@gmail.com>
  */
-
 class PointType extends GeometryType
 {
     
