@@ -26,7 +26,7 @@ class Create
             $this->validate($objRequest);
             
             $this->objNome = new Nome();
-            $this->objNome->setIdPessoa($this->objPessoa);
+            $this->objNome->setPessoa($this->objPessoa);
             $this->objNome->setNome($objRequest->get('nome', NULL));
             $this->objNome->setTipo($objRequest->get('tipo', NULL));
         } catch (\RuntimeException $e){

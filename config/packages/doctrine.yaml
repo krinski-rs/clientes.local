@@ -24,6 +24,9 @@ doctrine:
             pessoas.tipo_relacionamento_pessoa:
                 class:                App\DBAL\Type\Enum\Vogel\TipoRelacionamentoPessoaType
                 commented:            true
+            pessoas.tipo_documento:
+                class:                App\DBAL\Type\Enum\Vogel\TipoDocumentoType
+                commented:            true
             point:
                 class:                App\DBAL\Type\Spatial\Geometry\PointType
                 commented:            true
@@ -43,6 +46,7 @@ doctrine:
                     tipo_endereco_pessoa: pessoas.tipo_endereco_pessoa
                     nacionalidade_pessoa: pessoas.nacionalidade_pessoa
                     tipo_relacionamento_pessoa: pessoas.tipo_relacionamento_pessoa
+                    tipo_documento: pessoas.tipo_documento
                 schema_filter: '/^(pessoas.)/'
     orm:
         default_entity_manager: default

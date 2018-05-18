@@ -3,9 +3,9 @@
 namespace App\Entity\Pessoas;
 
 /**
- * Nome
+ * Documento
  */
-class Nome
+class Documento
 {
     /**
      * @var int
@@ -13,14 +13,14 @@ class Nome
     private $id;
 
     /**
-     * @var pessoas.tipo_nome_pessoa
+     * @var pessoas.tipo_documento
      */
     private $tipo;
 
     /**
-     * @var string
+     * @var \DateTime
      */
-    private $nome;
+    private $dataCadastro;
 
     /**
      * @var \App\Entity\Pessoas\Pessoa
@@ -41,9 +41,9 @@ class Nome
     /**
      * Set tipo.
      *
-     * @param pessoas.tipo_nome_pessoa $tipo
+     * @param pessoas.tipo_documento $tipo
      *
-     * @return Nome
+     * @return Documento
      */
     public function setTipo($tipo)
     {
@@ -55,7 +55,7 @@ class Nome
     /**
      * Get tipo.
      *
-     * @return pessoas.tipo_nome_pessoa
+     * @return pessoas.tipo_documento
      */
     public function getTipo()
     {
@@ -63,27 +63,27 @@ class Nome
     }
 
     /**
-     * Set nome.
+     * Set dataCadastro.
      *
-     * @param string $nome
+     * @param \DateTime $dataCadastro
      *
-     * @return Nome
+     * @return Documento
      */
-    public function setNome($nome)
+    public function setDataCadastro($dataCadastro)
     {
-        $this->nome = $nome;
+        $this->dataCadastro = $dataCadastro;
 
         return $this;
     }
 
     /**
-     * Get nome.
+     * Get dataCadastro.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getNome()
+    public function getDataCadastro()
     {
-        return $this->nome;
+        return $this->dataCadastro;
     }
 
     /**
@@ -91,7 +91,7 @@ class Nome
      *
      * @param \App\Entity\Pessoas\Pessoa|null $pessoa
      *
-     * @return Nome
+     * @return Documento
      */
     public function setPessoa(\App\Entity\Pessoas\Pessoa $pessoa = null)
     {

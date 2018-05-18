@@ -77,7 +77,7 @@ App\Entity\Pessoas\Endereco:
             options:
                 fixed: false
     manyToOne:
-        idPessoa:
+        pessoa:
             targetEntity: App\Entity\Pessoas\Pessoa
             cascade: {  }
             fetch: LAZY

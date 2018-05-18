@@ -15,12 +15,12 @@ class PessoaToPessoa
     /**
      * @var \App\Entity\Pessoas\Pessoa
      */
-    private $pessoaOrigem;
+    private $pessoa;
 
     /**
      * @var \App\Entity\Pessoas\Pessoa
      */
-    private $pessoaDestino;
+    private $relacao;
 
 
     /**
@@ -48,50 +48,50 @@ class PessoaToPessoa
     }
 
     /**
-     * Set pessoaOrigem.
+     * Set pessoa.
      *
-     * @param \App\Entity\Pessoas\Pessoa $pessoaOrigem
+     * @param \App\Entity\Pessoas\Pessoa $pessoa
      *
      * @return PessoaToPessoa
      */
-    public function setPessoaOrigem(\App\Entity\Pessoas\Pessoa $pessoaOrigem)
+    public function setPessoa(\App\Entity\Pessoas\Pessoa $pessoa)
     {
-        $this->pessoaOrigem = $pessoaOrigem;
+        $this->pessoa = $pessoa;
 
         return $this;
     }
 
     /**
-     * Get pessoaOrigem.
+     * Get pessoa.
      *
      * @return \App\Entity\Pessoas\Pessoa
      */
-    public function getPessoaOrigem()
+    public function getPessoa()
     {
-        return $this->pessoaOrigem;
+        return $this->pessoa;
     }
 
     /**
-     * Set pessoaDestino.
+     * Set relacao.
      *
-     * @param \App\Entity\Pessoas\Pessoa $pessoaDestino
+     * @param \App\Entity\Pessoas\Pessoa $relacao
      *
      * @return PessoaToPessoa
      */
-    public function setPessoaDestino(\App\Entity\Pessoas\Pessoa $pessoaDestino)
+    public function setRelacao(\App\Entity\Pessoas\Pessoa $relacao)
     {
-        $this->pessoaDestino = $pessoaDestino;
+        $this->relacao = $relacao;
 
         return $this;
     }
 
     /**
-     * Get pessoaDestino.
+     * Get relacao.
      *
      * @return \App\Entity\Pessoas\Pessoa
      */
-    public function getPessoaDestino()
+    public function getRelacao()
     {
-        return $this->pessoaDestino;
+        return $this->relacao;
     }
 }

@@ -32,12 +32,13 @@ class Create
             $this->objEndereco->setCidade(trim($objRequest->get('cidade', NULL)));
             $this->objEndereco->setComplemento($objRequest->get('complemento', NULL));
             $this->objEndereco->setEstado(trim($objRequest->get('estado', NULL)));
-            $this->objEndereco->setIdPessoa($this->objPessoa);
-            
-            print_r($objRequest->get('localizacao', NULL));
-            $localizacao = $objRequest->get('localizacao', NULL);
-            $objPoint = new Point($localizacao['latitude'], $localizacao['longitude']);
-            $this->objEndereco->setLocalizacao($objPoint);
+            $this->objEndereco->setPessoa($this->objPessoa);
+            if($objRequest->get('localizacao', NULL)){
+                print_r($objRequest->get('localizacao', NULL));
+                $localizacao = $objRequest->get('localizacao', NULL);
+                $objPoint = new Point($localizacao['latitude'], $localizacao['longitude']);
+                $this->objEndereco->setLocalizacao($objPoint);
+            }
             $this->objEndereco->setLogradouro(trim($objRequest->get('logradouro', NULL)));
             $this->objEndereco->setNumero(trim($objRequest->get('numero', NULL)));
             $this->objEndereco->setPais(trim($objRequest->get('pais', NULL)));
@@ -59,7 +60,7 @@ class Create
         
         $objChoiceTipo = new Assert\Choice( [
             'choices' => TipoEnderecoPessoaType::getChoices(),
-            'message' => 'Selecione um tipo de nome válido.'
+            'message' => 'Selecione um tipo de endereço válido.'
         ] );
         
         $objLength = new Assert\Length( [

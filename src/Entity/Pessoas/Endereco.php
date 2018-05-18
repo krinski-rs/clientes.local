@@ -2,6 +2,8 @@
 
 namespace App\Entity\Pessoas;
 
+use App\DBAL\PHP\Spatial\Geometry\Point;
+
 /**
  * Endereco
  */
@@ -58,7 +60,7 @@ class Endereco
     private $cep;
 
     /**
-     * @var point|null
+     * @var Point|null
      */
     private $localizacao;
 
@@ -70,7 +72,7 @@ class Endereco
     /**
      * @var \App\Entity\Pessoas\Pessoa
      */
-    private $idPessoa;
+    private $pessoa;
 
 
     /**
@@ -302,7 +304,7 @@ class Endereco
     /**
      * Set localizacao.
      *
-     * @param point|null $localizacao
+     * @param Point|null $localizacao
      *
      * @return Endereco
      */
@@ -316,7 +318,7 @@ class Endereco
     /**
      * Get localizacao.
      *
-     * @return point|null
+     * @return Point|null
      */
     public function getLocalizacao()
     {
@@ -348,26 +350,26 @@ class Endereco
     }
 
     /**
-     * Set idPessoa.
+     * Set pessoa.
      *
-     * @param \App\Entity\Pessoas\Pessoa|null $idPessoa
+     * @param \App\Entity\Pessoas\Pessoa|null $pessoa
      *
      * @return Endereco
      */
-    public function setIdPessoa(\App\Entity\Pessoas\Pessoa $idPessoa = null)
+    public function setPessoa(\App\Entity\Pessoas\Pessoa $pessoa = null)
     {
-        $this->idPessoa = $idPessoa;
+        $this->pessoa = $pessoa;
 
         return $this;
     }
 
     /**
-     * Get idPessoa.
+     * Get pessoa.
      *
      * @return \App\Entity\Pessoas\Pessoa|null
      */
-    public function getIdPessoa()
+    public function getPessoa()
     {
-        return $this->idPessoa;
+        return $this->pessoa;
     }
 }

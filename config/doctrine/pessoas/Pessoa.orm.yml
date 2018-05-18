@@ -35,14 +35,28 @@ App\Entity\Pessoas\Pessoa:
     oneToMany:
         nomes:
             targetEntity: App\Entity\Pessoas\Nome
-            mappedBy: idPessoa
+            mappedBy: pessoa
             cascade:
                 - persist
                 - merge
                 - remove
         enderecos:
             targetEntity: App\Entity\Pessoas\Endereco
-            mappedBy: idPessoa
+            mappedBy: pessoa
+            cascade:
+                - persist
+                - merge
+                - remove
+        documentos:
+            targetEntity: App\Entity\Pessoas\Documento
+            mappedBy: pessoa
+            cascade:
+                - persist
+                - merge
+                - remove
+        relacao:
+            targetEntity: App\Entity\Pessoas\PessoaToPessoa
+            mappedBy: pessoa
             cascade:
                 - persist
                 - merge

@@ -1,8 +1,8 @@
-App\Entity\Pessoas\Nome:
+App\Entity\Pessoas\Documento:
     type: entity
-    table: pessoas.nome
+    table: pessoas.documento
     indexes:
-        IDX_8F82B363AE81E6F:
+        IDX_93F45BE03AE81E6F:
             columns:
                 - id_pessoa
     id:
@@ -16,14 +16,12 @@ App\Entity\Pessoas\Nome:
                 strategy: SEQUENCE
     fields:
         tipo:
-            type: pessoas.tipo_nome_pessoa
+            type: pessoas.tipo_documento
             nullable: false
-        nome:
-            type: string
+        dataCadastro:
+            type: datetime
             nullable: false
-            length: 255
-            options:
-                fixed: false
+            column: data_cadastro
     manyToOne:
         pessoa:
             targetEntity: App\Entity\Pessoas\Pessoa

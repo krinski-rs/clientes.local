@@ -48,12 +48,24 @@ class Pessoa
     private $enderecos;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $documentos;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $relacao;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->nomes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->enderecos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documentos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->relacao = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -256,5 +268,77 @@ class Pessoa
     public function getEnderecos()
     {
         return $this->enderecos;
+    }
+
+    /**
+     * Add documento.
+     *
+     * @param \App\Entity\Pessoas\Documento $documento
+     *
+     * @return Pessoa
+     */
+    public function addDocumento(\App\Entity\Pessoas\Documento $documento)
+    {
+        $this->documentos[] = $documento;
+
+        return $this;
+    }
+
+    /**
+     * Remove documento.
+     *
+     * @param \App\Entity\Pessoas\Documento $documento
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeDocumento(\App\Entity\Pessoas\Documento $documento)
+    {
+        return $this->documentos->removeElement($documento);
+    }
+
+    /**
+     * Get documentos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDocumentos()
+    {
+        return $this->documentos;
+    }
+
+    /**
+     * Add relacao.
+     *
+     * @param \App\Entity\Pessoas\PessoaToPessoa $relacao
+     *
+     * @return Pessoa
+     */
+    public function addRelacao(\App\Entity\Pessoas\PessoaToPessoa $relacao)
+    {
+        $this->relacao[] = $relacao;
+
+        return $this;
+    }
+
+    /**
+     * Remove relacao.
+     *
+     * @param \App\Entity\Pessoas\PessoaToPessoa $relacao
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeRelacao(\App\Entity\Pessoas\PessoaToPessoa $relacao)
+    {
+        return $this->relacao->removeElement($relacao);
+    }
+
+    /**
+     * Get relacao.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRelacao()
+    {
+        return $this->relacao;
     }
 }
