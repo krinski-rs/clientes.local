@@ -10,6 +10,7 @@ use App\DBAL\Type\Enum\Vogel\TipoPessoaType;
 use App\Entity\Pessoas\Pessoa;
 use App\Service\Pessoas\Nome\Create as CreateNome;
 use App\Service\Pessoas\Endereco\Create as CreateEndereco;
+use App\Service\Pessoas\Documento\Create as CreateDocumento;
 
 class CreatePJ
 {
@@ -27,10 +28,10 @@ class CreatePJ
             $arrayNomes = $objRequest->get('nomes', NULL);
             
             $objCreateNome = new CreateNome($this->objEntityManager);
+            $objCreateNome->setPessoa($this->objPessoa);
             
             reset($arrayNomes);
             while($nomes = current($arrayNomes)){
-                $objCreateNome->setPessoa($this->objPessoa);
                 $objCreateNome->create(new Request([], [], $nomes));
                 $this->objPessoa->addNome($objCreateNome->getNome());
                 next($arrayNomes);
@@ -51,10 +52,10 @@ class CreatePJ
             $arrayEnderecos = $objRequest->get('enderecos', NULL);
             
             $objCreateEndereco = new CreateEndereco($this->objEntityManager);
+            $objCreateEndereco->setPessoa($this->objPessoa);
             
             reset($arrayEnderecos);
             while($enderecos = current($arrayEnderecos)){
-                $objCreateEndereco->setPessoa($this->objPessoa);
                 $objCreateEndereco->create(new Request([], [], $enderecos));
                 $this->objPessoa->addEndereco($objCreateEndereco->getEndereco());
                 next($arrayEnderecos);
@@ -62,6 +63,32 @@ class CreatePJ
             
             if($this->objPessoa->getEnderecos()->count() != count($arrayEnderecos)){
                 throw new \RuntimeException('Erro ao inserir os endereços.');
+            }
+            
+        } catch (\RuntimeException $e){
+            throw $e;
+        } catch (\Exception $e){
+            throw $e;
+        }
+    }
+    
+    private function createDocumentos(Request $objRequest)
+    {
+        try {
+            $arrayDocumentos = $objRequest->get('documentos', NULL);
+            
+            $objCreateDocumento = new CreateDocumento($this->objEntityManager);
+            $objCreateDocumento->setPessoa($this->objPessoa);
+            
+            reset($arrayDocumentos);
+            while($documentos = current($arrayDocumentos)){
+                $objCreateDocumento->create(new Request([], [], $documentos));
+                $this->objPessoa->addDocumento($objCreateDocumento->getDocumento());
+                next($arrayDocumentos);
+            }
+            
+            if($this->objPessoa->getDocumentos()->count() != count($arrayDocumentos)){
+                throw new \RuntimeException('Erro ao inserir os documentos.');
             }
             
         } catch (\RuntimeException $e){
@@ -85,6 +112,7 @@ class CreatePJ
             $this->objPessoa->setNacionalidade($objRequest->get('nacionalidade', NULL));
             $this->objPessoa->setTipo($objRequest->get('tipo', NULL));
             $this->createNomes($objRequest);
+            $this->createDocumentos($objRequest);
             $this->createEnderecos($objRequest);
         } catch (\RuntimeException $e){
             throw $e;
@@ -200,6 +228,12 @@ class CreatePJ
                             $objNotBlank,
                             $objCount
                         ]
+                    ),
+                    'documentos' => new Assert\Required( [
+                            $objNotNull,
+                            $objNotBlank,
+                            $objCount
+                        ]
                     )
                 ]
             ]
@@ -210,7 +244,8 @@ class CreatePJ
             'dataAniversario'       => $objRequest->get('dataAniversario', NULL),
             'ativo'                 => $objRequest->get('ativo', NULL),
             'nomes'                 => $objRequest->get('nomes', NULL),
-            'enderecos'             => $objRequest->get('enderecos', NULL)
+            'enderecos'             => $objRequest->get('enderecos', NULL),
+            'documentos'             => $objRequest->get('documentos', NULL)
         ];
         
         $objConstraintViolationList = $objRecursiveValidator->validate($data, $objCollection);

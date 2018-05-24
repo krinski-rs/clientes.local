@@ -21,7 +21,12 @@ class Documento
      * @var \DateTime
      */
     private $dataCadastro;
-
+    
+    /**
+     * @var string
+     */
+    private $valor;
+    
     /**
      * @var \App\Entity\Pessoas\Pessoa
      */
@@ -85,7 +90,31 @@ class Documento
     {
         return $this->dataCadastro;
     }
-
+    
+    /**
+     * Set valor.
+     *
+     * @param string $valor
+     *
+     * @return Documento
+     */
+    public function setValor($valor)
+    {
+        $this->valor = $valor;
+        
+        return $this;
+    }
+    
+    /**
+     * Get valor.
+     *
+     * @return string
+     */
+    public function getValor()
+    {
+        return $this->valor;
+    }
+    
     /**
      * Set pessoa.
      *
