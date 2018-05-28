@@ -110,6 +110,7 @@ CREATE TABLE pessoas.documento
     id_pessoa integer NOT NULL,
     tipo pessoas.tipo_documento NOT NULL,
     data_cadastro timestamp(0) without time zone NOT NULL,
+    valor character varying(255) NOT NULL,
     CONSTRAINT documento_pkey PRIMARY KEY (id),
     CONSTRAINT documento_id_pessoa FOREIGN KEY (id_pessoa)
         REFERENCES pessoas.pessoa (id) MATCH SIMPLE

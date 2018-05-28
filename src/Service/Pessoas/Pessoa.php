@@ -17,7 +17,6 @@ class Pessoa
     public function create(Request $objRequest)
     {
         try {
-            
             $objPessoasPessoaCreate = new CreatePJ($this->objEntityManager);
             $objPessoasPessoaCreate->create($objRequest);
             return $objPessoasPessoaCreate->save();
@@ -26,6 +25,11 @@ class Pessoa
         } catch (\Exception $e){
             throw $e;
         }
+    }
+    
+    public function list()
+    {
+        
     }
 }
 

@@ -77,8 +77,21 @@ class PessoaController extends Controller
     }
     
     public function getPessoas(Request $objRequest)
-    {        
-        return new JsonResponse(['type'=>['getPessoas']], Response::HTTP_OK);
+    {
+        try {
+            $objPessoasPessoa = $this->get('pessoas.pessoa');
+            if(!$objPessoasPessoa instanceof PessoaService){
+                return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            
+            $objPessoa = $objPessoasPessoa->create($objRequest);
+            
+            return new JsonResponse(['id'=>$objPessoa->getId()], Response::HTTP_OK);
+        } catch (\RuntimeException $e) {
+            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+        } catch (\Exception $e) {
+            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
     
     public function deletePessoa(int $id)
