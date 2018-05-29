@@ -11,6 +11,7 @@ use App\Entity\Pessoas\Pessoa;
 use App\Service\Pessoas\Nome\Create as CreateNome;
 use App\Service\Pessoas\Endereco\Create as CreateEndereco;
 use App\Service\Pessoas\Documento\Create as CreateDocumento;
+use App\Service\Pessoas\PessoaToPessoa\Create as CreateRelacionamento;
 
 class CreatePJ
 {
@@ -98,13 +99,37 @@ class CreatePJ
         }
     }
     
+    private function createRelacionamento(Request $objRequest)
+    {
+        try {
+            $arrayRelacionamentos = $objRequest->get('relacionamentos', NULL);
+            
+            $objCreateRelacionamento = new CreateRelacionamento($this->objEntityManager);
+            $objCreateRelacionamento->setPessoa($this->objPessoa);
+            
+            reset($arrayRelacionamentos);
+            while($relacionamento = current($arrayRelacionamentos)){
+                $objCreateRelacionamento->create(new Request([], [], $relacionamento));
+                $this->objPessoa->addRelacao($objCreateRelacionamento->getPessoaToPessoa());
+                next($arrayRelacionamentos);
+            }
+            
+            if($this->objPessoa->getRelacao()->count() != count($arrayRelacionamentos)){
+                throw new \RuntimeException('Erro ao inserir os relacionamentos.');
+            }
+            
+        } catch (\RuntimeException $e){
+            throw $e;
+        } catch (\Exception $e){
+            throw $e;
+        }
+    }
+    
     public function create(Request $objRequest)
     {
         try {
             $this->validate($objRequest);
-            
-            $objCreateNome = new CreateNome($this->objEntityManager);
-            
+                        
             $this->objPessoa = new Pessoa();
             $this->objPessoa->setAtivo($objRequest->get('ativo', NULL));
             $this->objPessoa->setDataAniversario(\DateTime::createFromFormat('Y-m-d H:i:s', $objRequest->get('dataAniversario', NULL).' 00:00:00'));
@@ -114,6 +139,7 @@ class CreatePJ
             $this->createNomes($objRequest);
             $this->createDocumentos($objRequest);
             $this->createEnderecos($objRequest);
+            $this->createRelacionamento($objRequest);
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){
