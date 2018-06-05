@@ -108,34 +108,5 @@ class PessoaController extends Controller
     {
         return new JsonResponse(['id'=>['patchPessoa']], Response::HTTP_OK);
     }
-    
-    public function status(int $id)
-    {
-        try {
-            $objPessoasPessoa = $this->get('redes.switch');
-            if(!$objPessoasPessoa instanceof PessoaService){
-                return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-            
-            $arrayStatus = $objPessoasPessoa->status($id);
-            return new JsonResponse($arrayStatus, Response::HTTP_OK);
-        } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
-        } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    public function putPessoaPorta(int $id)
-    {
-        $objPessoasPessoa = $this->get('redes.switch');
-        if(!$objPessoasPessoa instanceof PessoaService){
-            return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-        
-        $arrayStatus = $objPessoasPessoa->updatePessoaPorta($id);
-        
-        return new JsonResponse($arrayStatus, Response::HTTP_OK);
-    }
 }
 

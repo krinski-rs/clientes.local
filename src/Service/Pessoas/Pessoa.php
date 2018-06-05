@@ -3,7 +3,7 @@ namespace App\Service\Pessoas;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpFoundation\Request;
-use App\Service\Pessoas\Pessoa\CreatePJ;
+use App\Service\Pessoas\Pessoa\Create;
 
 class Pessoa
 {
@@ -17,7 +17,7 @@ class Pessoa
     public function create(Request $objRequest)
     {
         try {
-            $objPessoasPessoaCreate = new CreatePJ($this->objEntityManager);
+            $objPessoasPessoaCreate = new Create($this->objEntityManager);
             $objPessoasPessoaCreate->create($objRequest);
             return $objPessoasPessoaCreate->save();
         } catch (\RuntimeException $e){

@@ -13,7 +13,7 @@ use App\Service\Pessoas\Endereco\Create as CreateEndereco;
 use App\Service\Pessoas\Documento\Create as CreateDocumento;
 use App\Service\Pessoas\PessoaToPessoa\Create as CreateRelacionamento;
 
-class CreatePJ
+class Create
 {
     private $objEntityManager   = NULL;
     private $objPessoa    = NULL;
