@@ -4,6 +4,7 @@ namespace App\Service\Pessoas;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\Pessoas\Pessoa\Create;
+use App\Service\Pessoas\Pessoa\Listing;
 
 class Pessoa
 {
@@ -27,9 +28,28 @@ class Pessoa
         }
     }
     
-    public function list()
+    public function get(int $idPessoa)
     {
-        
+        try {
+            $objPessoasPessoaListing = new Listing($this->objEntityManager);
+            return $objPessoasPessoaListing->get($idPessoa);
+        } catch (\RuntimeException $e){
+            throw $e;
+        } catch (\Exception $e){
+            throw $e;
+        }
+    }
+    
+    public function list(Request $objRequest)
+    {
+        try {
+            $objPessoasPessoaListing = new Listing($this->objEntityManager);
+            return $objPessoasPessoaListing->list($objRequest);
+        } catch (\RuntimeException $e){
+            throw $e;
+        } catch (\Exception $e){
+            throw $e;
+        }
     }
 }
 
