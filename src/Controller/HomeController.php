@@ -40,7 +40,6 @@ class HomeController extends Controller
     
     public function logout()
     {
-        
         try {
             $objSSOClient = $this->get('sso_client');
             return $objSSOClient->logout();
@@ -49,8 +48,6 @@ class HomeController extends Controller
         } catch (\Exception $e) {
             return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        
-        
     }
     
     public function home(Request $objRequest)
@@ -210,456 +207,56 @@ class HomeController extends Controller
                     ],
                     'menu'      => [
                         [
-                            'href'  => '/luma',
-                            'icon'  => 'icon-list-alt',
-                            'text'  => 'LUMA',
-                            'class'  => 'panel',
+                            'href'  => 'http://site.local.com/home',
+                            'icon'  => 'icon-home',
+                            'text'  => 'Home',
+                            'class' => 'panel',
                             'menu'  => []
                         ],
                         [
                             'href'  => '#',
-                            'icon'  => 'icon-tasks',
-                            'text'  => 'UI Elements',
+                            'icon'  => 'icon-user',
+                            'text'  => 'Pessoa Física',
                             'total' => '0',
                             'class'  => 'panel',
                             'labelClass'  => 'label-default',
-                            'menu'  => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Buttons',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Icons',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Progress',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Tabs & Panels',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Notification',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'More Notification',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Modals',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Wizard',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Sliders',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Typography',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
+                            'menu'  => []
                         ],
                         [
                             'href'  => '#',
-                            'icon'  => 'icon-pencil',
-                            'text'  => 'Forms',
+                            'icon'  => 'icon-legal',
+                            'text'  => 'Pessoa Jurídica',
                             'class'  => 'panel',
                             'labelClass'  => 'label-success',
                             'total' => '0',
-                            'menu'  => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'General',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Advance',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Validation',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'FileUpload',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'WYSIWYG / Editor',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
+                            'menu'  => []
                         ],
                         [
                             'href'  => '#',
-                            'icon'  => 'icon-table',
-                            'text'  => 'Pages',
+                            'icon'  => 'icon-usd',
+                            'text'  => 'Cliente',
                             'class'  => 'panel',
                             'labelClass'  => 'label-info',
                             'total' => '0',
-                            'menu'  => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Calendar',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Timeline',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Social',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Pricing',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Offline',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Under Construction',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
+                            'menu'  => []
                         ],
                         [
                             'href'  => '#',
-                            'icon'  => 'icon-bar-chart',
-                            'text'  => 'Charts',
+                            'icon'  => 'icon-credit-card',
+                            'text'  => 'Fornecedores',
                             'class'  => 'panel',
                             'labelClass'  => 'label-danger',
                             'total' => '0',
-                            'menu'  => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Line Charts',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Bar Charts',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Pie Charts',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Other Charts',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
+                            'menu'  => []
                         ],
                         [
                             'href'  => '#',
-                            'icon'  => 'icon-sitemap',
-                            'text'  => '3 Level Menu',
+                            'icon'  => 'icon-group',
+                            'text'  => 'Pessoas',
                             'class'  => 'panel',
+                            'labelClass'  => 'label-danger',
                             'total' => '0',
-                            'menu'  => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-sitemap',
-                                    'text'  => 'Demo Link 1',
-                                    'class'  => '',
-                                    'menu'  => [
-                                        [
-                                            'href'  => '#',
-                                            'icon'  => 'icon-angle-right',
-                                            'text'  => 'Demo Link 1',
-                                            'class'  => '',
-                                            'menu'  => []
-                                        ],
-                                        [
-                                            'href'  => '#',
-                                            'icon'  => 'icon-angle-right',
-                                            'text'  => 'Demo Link 2',
-                                            'class'  => '',
-                                            'menu'  => []
-                                        ],
-                                        [
-                                            'href'  => '#',
-                                            'icon'  => 'icon-angle-right',
-                                            'text'  => 'Demo Link 3',
-                                            'class'  => '',
-                                            'menu'  => []
-                                        ]
-                                    ]
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Demo Link 2',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Demo Link 3',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Demo Link 4',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
-                        ],
-                        [
-                            'href'  => '#',
-                            'icon'  => 'icon-folder-open-alt',
-                            'text'  => '4 Level Menu',
-                            'class'  => 'panel',
-                            'total' => '0',
-                            'menu'  => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-sitemap',
-                                    'text'  => 'Demo Link 1',
-                                    'class'  => '',
-                                    'menu'  => [
-                                        [
-                                            'href'  => '#',
-                                            'icon'  => 'icon-sitemap',
-                                            'text'  => 'Demo Link 1',
-                                            'class'  => '',
-                                            'menu'  => [
-                                                [
-                                                    'href'  => '#',
-                                                    'icon'  => 'icon-angle-right',
-                                                    'text'  => 'Demo Link 1',
-                                                    'class'  => '',
-                                                    'menu'  => []
-                                                ],
-                                                [
-                                                    'href'  => '#',
-                                                    'icon'  => 'icon-angle-right',
-                                                    'text'  => 'Demo Link 2',
-                                                    'class'  => '',
-                                                    'menu'  => []
-                                                ]
-                                            ]
-                                        ],
-                                        [
-                                            'href'  => '#',
-                                            'icon'  => 'icon-angle-right',
-                                            'text'  => 'Demo Link 2',
-                                            'class'  => '',
-                                            'menu'  => []
-                                        ],
-                                        [
-                                            'href'  => '#',
-                                            'icon'  => 'icon-angle-right',
-                                            'text'  => 'Demo Link 3',
-                                            'class'  => '',
-                                            'menu'  => []
-                                        ]
-                                    ]
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Demo Link 2',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Demo Link 3',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Demo Link 4',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
-                        ],
-                        [
-                            'href'          => '#',
-                            'icon'          => 'icon-warning-sign',
-                            'text'          => 'Error Pages',
-                            'class'         => 'panel',
-                            'labelClass'    => 'label-warning',
-                            'total'         => '0',
-                            'menu'          => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Error 403',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Error 404',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Error 500',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Error 503',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
-                        ],
-                        [
-                            'href'          => '#',
-                            'icon'          => 'icon-film',
-                            'text'          => 'Image Gallery',
-                            'class'         => '',
-                            'menu'          => []
-                        ],
-                        [
-                            'href'          => '#',
-                            'icon'          => 'icon-table',
-                            'text'          => 'Data Tables',
-                            'class'         => '',
-                            'menu'          => []
-                        ],
-                        [
-                            'href'          => '#',
-                            'icon'          => 'icon-map-marker',
-                            'text'          => 'Maps',
-                            'class'         => '',
-                            'menu'          => []
-                        ],
-                        [
-                            'href'          => '#',
-                            'icon'          => 'icon-columns',
-                            'text'          => 'Grid',
-                            'class'         => '',
-                            'menu'          => []
-                        ],
-                        [
-                            'href'  => '#',
-                            'icon'  => 'icon-check-empty',
-                            'text'  => 'Blank Pages',
-                            'total' => '2',
-                            'class'  => 'panel',
-                            'labelClass'  => 'label-success',
-                            'menu'  => [
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Blank Page One',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ],
-                                [
-                                    'href'  => '#',
-                                    'icon'  => 'icon-angle-right',
-                                    'text'  => 'Blank Page Two',
-                                    'class'  => '',
-                                    'menu'  => []
-                                ]
-                            ]
-                        ],
-                        [
-                            'href'          => '#',
-                            'icon'          => 'icon-signin',
-                            'text'          => 'Login Page',
-                            'class'         => '',
-                            'menu'          => []
+                            'menu'  => []
                         ]
                     ],
                     'content'   => [
