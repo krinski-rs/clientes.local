@@ -1,0 +1,47 @@
+﻿{% if menuTop is defined and menuTop|length > 0 %}
+					<ul class="nav navbar-top-links navbar-right">
+{% use "base/menu_blocks.html.twig" %}
+{% for key, menu in menuTop %}
+						<li class="dropdown {% if attribute(menu, 'class') is defined %}{{ menu.class }}{% endif %}">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+{% if attribute(menu, 'labelClass') is defined and attribute(menu, 'labelTotal') is defined %}
+								<span class="label {{ menu.labelClass }}">{{ menu.labelTotal }}</span>
+{% endif %}
+								<i class="{{ menu.icon }}"></i> 
+								<i class="icon-chevron-down"></i>
+							</a>
+{% if attribute(menu, 'subMenus') is defined and menu.subMenus|length > 0 %}
+{% set subMenus = menu.subMenus %}
+							<ul class="dropdown-menu {{ subMenus.class }}">
+{% for key, subMenu in subMenus.menu %}
+{% if key > 0 %}
+								<li class="divider"></li>
+{% endif %}
+								<li>
+									<a href="{{ subMenu.href }}">
+{% if subMenus.class == 'dropdown-messages' %}
+{% block block_messages %}
+{{ parent(subMenu) }}
+{% endblock %}
+{% elseif subMenus.class == 'dropdown-tasks' %}
+{% block block_tasks %}
+{{ parent(subMenu) }}
+{% endblock %}
+{% elseif subMenus.class == 'dropdown-alerts' %}
+{% block block_alerts %}
+{{ parent(subMenu) }}
+{% endblock %}
+{% elseif subMenus.class == 'dropdown-user' %}
+{% block block_users %}
+{{ parent(subMenu) }}
+{% endblock %}
+{% endif %}
+									</a>
+								</li>
+{% endfor %}
+							</ul>
+{% endif %}
+						</li>
+{% endfor %}
+					</ul>
+{% endif %}
