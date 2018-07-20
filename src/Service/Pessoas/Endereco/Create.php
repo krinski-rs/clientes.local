@@ -34,7 +34,6 @@ class Create
             $this->objEndereco->setEstado(trim($objRequest->get('estado', NULL)));
             $this->objEndereco->setPessoa($this->objPessoa);
             if($objRequest->get('localizacao', NULL)){
-                print_r($objRequest->get('localizacao', NULL));
                 $localizacao = $objRequest->get('localizacao', NULL);
                 $objPoint = new Point($localizacao['latitude'], $localizacao['longitude']);
                 $this->objEndereco->setLocalizacao($objPoint);
@@ -216,7 +215,7 @@ class Create
         }
         
         if(!($this->objPessoa instanceof Pessoa)){
-            $this->objPessoa = $this->objEntityManager->getRepository('Pessoas:Pessoa')->find($objRequest->get('idPessoa', NULL));
+            $this->objPessoa = $this->objEntityManager->getRepository('App\Entity\Pessoas\Pessoa')->find($objRequest->get('idPessoa', NULL));
             if(!($this->objPessoa instanceof Pessoa)){
                 throw new \RuntimeException('Pessoa não localizada.');
             }

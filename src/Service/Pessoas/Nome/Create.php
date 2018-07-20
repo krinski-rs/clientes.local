@@ -111,7 +111,7 @@ class Create
         }
         
         if(!($this->objPessoa instanceof Pessoa)){
-            $this->objPessoa = $this->objEntityManager->getRepository('Pessoas:Pessoa')->find($objRequest->get('idPessoa', NULL));
+            $this->objPessoa = $this->objEntityManager->getRepository('App\Entity\Pessoas\Pessoa')->find($objRequest->get('idPessoa', NULL));
             if(!($this->objPessoa instanceof Pessoa)){
                 throw new \RuntimeException('Pessoa não localizada.');
             }

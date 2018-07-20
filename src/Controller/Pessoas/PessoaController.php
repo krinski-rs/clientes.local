@@ -6,7 +6,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\Pessoas\Pessoa as PessoaService;
-
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use App\Entity\Pessoas\Pessoa;
 
 class PessoaController extends Controller
 {
@@ -29,51 +33,41 @@ class PessoaController extends Controller
         }
     }
     
-    public function getPessoa(int $id)
+    public function getPessoa(int $idPessoa)
     {
-//         $fractal = new Manager();
+        try {
+            $objPessoasPessoa = $this->get('pessoas.pessoa');
+            if(!$objPessoasPessoa instanceof PessoaService){
+                return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            
+            $objPessoa = $objPessoasPessoa->get($idPessoa);
+            $encoders = array(new XmlEncoder(), new JsonEncoder());
+            
+            $objObjectNormalizer = new ObjectNormalizer();
         
-        // Get data from some sort of source
-        // Most PHP extensions for SQL engines return everything as a string, historically
-        // for performance reasons. We will fix this later, but this array represents that.
-        $books = [
-            [
-                'id' => '1',
-                'title' => 'Hogfather',
-                'yr' => '1998',
-                'author_name' => 'Philip K Dick',
-                'author_email' => 'philip@example.org',
-            ],
-            [
-                'id' => '2',
-                'title' => 'Game Of Kill Everyone',
-                'yr' => '2014',
-                'author_name' => 'George R. R. Satan',
-                'author_email' => 'george@example.org',
-            ]
-        ];
+            $objObjectNormalizer->setCircularReferenceHandler(function (Pessoa $objPessoa) {
+                return $objPessoa->getId();
+            });
         
-//         $resource = new Collection($books, function(array $book) {
-//             return [
-//                 'id'      => (int) $book['id'],
-//                 'title'   => $book['title'],
-//                 'year'    => (int) $book['yr'],
-//                 'author'  => [
-//                     'name'  => $book['author_name'],
-//                     'email' => $book['author_email'],
-//                 ],
-//                 'links'   => [
-//                     [
-//                         'rel' => 'self',
-//                         'uri' => '/books/'.$book['id'],
-//                     ]
-//                 ]
-//             ];
-//         });
-        
-//         $array = $fractal->createData($resource)->toArray();
-//         return new JsonResponse($array, Response::HTTP_OK);
-        return new JsonResponse(['type'=>['getPessoa::id']], Response::HTTP_OK);
+            $callbackDateTime = function ($dateTime) {
+                return $dateTime instanceof \DateTime
+                ? $dateTime->format(\DateTime::ISO8601)
+                : '';
+            };
+                
+            $objObjectNormalizer->setCallbacks(array('dataCadastro' => $callbackDateTime, 'dataAniversario' => $callbackDateTime));
+            $objObjectNormalizer->setCircularReferenceLimit(1);
+            $normalizers = array($objObjectNormalizer);
+            
+            
+            $objSerializer = new Serializer($normalizers, $encoders);
+            return new JsonResponse($objSerializer->normalize($objPessoa, 'json'), Response::HTTP_OK);
+        } catch (\RuntimeException $e) {
+            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+        } catch (\Exception $e) {
+            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
     
     public function getPessoas(Request $objRequest)
@@ -84,9 +78,28 @@ class PessoaController extends Controller
                 return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
             }
             
-            $objPessoa = $objPessoasPessoa->create($objRequest);
+            $arrayPessoa = $objPessoasPessoa->list($objRequest);
+            $encoders = array(new XmlEncoder(), new JsonEncoder());
             
-            return new JsonResponse(['id'=>$objPessoa->getId()], Response::HTTP_OK);
+            $objObjectNormalizer = new ObjectNormalizer();
+            
+            $objObjectNormalizer->setCircularReferenceHandler(function (Pessoa $objPessoa) {
+                return $objPessoa->getId();
+            });
+            
+            $callbackDateTime = function ($dateTime) {
+                return $dateTime instanceof \DateTime
+                ? $dateTime->format(\DateTime::ISO8601)
+                : '';
+            };
+            
+            $objObjectNormalizer->setCallbacks(array('dataCadastro' => $callbackDateTime, 'dataAniversario' => $callbackDateTime));
+            $objObjectNormalizer->setCircularReferenceLimit(1);
+            $normalizers = array($objObjectNormalizer);
+            
+            
+            $objSerializer = new Serializer($normalizers, $encoders);
+            return new JsonResponse($objSerializer->normalize($arrayPessoa, 'json'), Response::HTTP_OK);
         } catch (\RuntimeException $e) {
             return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
         } catch (\Exception $e) {
@@ -94,48 +107,19 @@ class PessoaController extends Controller
         }
     }
     
-    public function deletePessoa(int $id)
+    public function deletePessoa(int $idPessoa)
     {
         return new JsonResponse(['id'=>['deletePessoa']], Response::HTTP_OK);
     }
     
-    public function putPessoa(int $id)
+    public function putPessoa(int $idPessoa)
     {
         return new JsonResponse(['id'=>['putPessoa']], Response::HTTP_OK);
     }
     
-    public function patchPessoa(int $id)
+    public function patchPessoa(int $idPessoa)
     {
         return new JsonResponse(['id'=>['patchPessoa']], Response::HTTP_OK);
-    }
-    
-    public function status(int $id)
-    {
-        try {
-            $objPessoasPessoa = $this->get('redes.switch');
-            if(!$objPessoasPessoa instanceof PessoaService){
-                return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-            
-            $arrayStatus = $objPessoasPessoa->status($id);
-            return new JsonResponse($arrayStatus, Response::HTTP_OK);
-        } catch (\RuntimeException $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
-        } catch (\Exception $e) {
-            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-    
-    public function putPessoaPorta(int $id)
-    {
-        $objPessoasPessoa = $this->get('redes.switch');
-        if(!$objPessoasPessoa instanceof PessoaService){
-            return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-        
-        $arrayStatus = $objPessoasPessoa->updatePessoaPorta($id);
-        
-        return new JsonResponse($arrayStatus, Response::HTTP_OK);
     }
 }
 

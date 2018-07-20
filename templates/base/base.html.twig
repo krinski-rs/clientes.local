@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{{ title }}</title>
+		<meta charset="UTF-8" />
+		<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+		<meta content="Site" name="description" />
+		<meta content="Reinaldo Krinski" name="author" />
+		<link rel="stylesheet" href="{{ asset('/css/bootstrap/css/bootstrap.css') }}" />
+		<link rel="stylesheet" href="{{ asset('/css/main.css') }}" />
+		<link rel="stylesheet" href="{{ asset('/css/theme.css') }}" />
+		<link rel="stylesheet" href="{{ asset('/css/MoneAdmin.css') }}" />
+		<link rel="stylesheet" href="{{ asset('/css/font-awesome/css/font-awesome.css') }}" />
+{% if info is defined %}
+		<link rel="stylesheet" href="{{ asset('/css/layout2.css') }}" />
+{% endif %}
+{% block stylesheets %}
+{% endblock %}
+	</head>
+	<body class="padTop53">
+		<div id="wrap">
+			<div id="top">
+				<nav class="navbar navbar-inverse navbar-fixed-top" style="padding-top: 10px;">
+					<a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="#menu" id="menu-toggle">
+						<i class="icon-align-justify"></i>
+					</a>
+					<header class="navbar-header">
+						<a href="index.html" class="navbar-brand">
+							<img src="/img/logo.png" alt="" />
+						</a>
+					</header>
+{% include "base/menu_top.html.twig" %}
+				</nav>
+			</div>
+			<div id="left">
+{% include "base/user_info.html.twig" %}
+{% include "base/menu.html.twig" %}
+			</div>
+{% include "base/content.html.twig" %}
+{% include "base/info.html.twig" %}
+		</div>
+{% include "base/footer.html.twig" %}
+		<script src="{{ asset('/js/jquery/jquery.js') }}"></script>
+		<script src="{{ asset('/js/bootstrap/bootstrap.min.js') }}"></script>
+		<script src="{{ asset('/js/modernizr/modernizr.min.js') }}"></script>
+{% block javascripts %}
+{% endblock %}
+	</body>
+</html>

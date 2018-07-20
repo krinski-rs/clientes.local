@@ -5,16 +5,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validation;
 use Doctrine\ORM\EntityManager;
-use App\Entity\Pessoas\Pessoa;
-use App\Entity\Pessoas\PessoaToPessoa ;
+use App\Entity\Pessoas\Pessoa as EntityPessoa;
+use App\Entity\Pessoas\PessoaToPessoa as EntityPessoaToPessoa;
 use App\DBAL\Type\Enum\Vogel\TipoRelacionamentoPessoaType;
 
 class Create
 {
     private $objEntityManager   = NULL;
     private $objPessoaToPessoa  = NULL;
-    private $objPessoaOrigem    = NULL;
-    private $objPessoaDestino   = NULL;
+    private $objPessoa          = NULL;
+    private $objPessoaRelacao   = NULL;
 
     public function __construct(EntityManager $objEntityManager)
     {
@@ -25,10 +25,10 @@ class Create
     {
         try {
             $this->validate($objRequest);
-            $this->objPessoaToPessoa = new PessoaToPessoa();
+            $this->objPessoaToPessoa = new EntityPessoaToPessoa();
             $this->objPessoaToPessoa->setTipo($objRequest->get('tipo', NULL));
-            $this->objPessoaToPessoa->setPessoaOrigem($this->objPessoaOrigem);
-            $this->objPessoaToPessoa->setPessoaDestino($this->objPessoaDestino);
+            $this->objPessoaToPessoa->setPessoa($this->objPessoa);
+            $this->objPessoaToPessoa->setRelacao($this->objPessoaRelacao);
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){
@@ -67,13 +67,11 @@ class Create
                             $objChoiceTipo
                         ]
                     ),
-                    'idPessoaDestino' => new Assert\Required( [
-                            $objNotNull,
-                            $objNotBlank,
+                    'idPessoa' => new Assert\Optional( [
                             $objRange
                         ]
                     ),
-                    'idPessoaOrigem' => new Assert\Optional( [
+                    'idRelacao' => new Assert\Required( [
                             $objNotNull,
                             $objNotBlank,
                             $objRange
@@ -84,9 +82,9 @@ class Create
         );
         
         $data = [
-            'idPessoaOrigem'    => $objRequest->get('idPessoaOrigem', NULL),
-            'idPessoaDestino'   => $objRequest->get('idPessoaDestino', NULL),
-            'tipo'              => $objRequest->get('tipo', NULL)
+            'idPessoa'  => $objRequest->get('idPessoa', NULL),
+            'idRelacao' => $objRequest->get('idRelacao', NULL),
+            'tipo'      => $objRequest->get('tipo', NULL)
         ];
         
         $objConstraintViolationList = $objRecursiveValidator->validate($data, $objCollection);
@@ -105,18 +103,16 @@ class Create
             throw new \RuntimeException($mensagem);
         }
         
-        if(!($this->objPessoaOrigem instanceof Pessoa)){
-            $this->objPessoaOrigem = $this->objEntityManager->getRepository('Pessoas:Pessoa')->find($objRequest->get('idPessoaOrigem', NULL));
-            if(!($this->objPessoaOrigem instanceof Pessoa)){
-                throw new \RuntimeException('Pessoa Origem não localizada.');
+        if(!($this->objPessoa instanceof EntityPessoa)){
+            $this->objPessoa = $this->objEntityManager->getRepository('App\Entity\Pessoas\Pessoa')->find($objRequest->get('idPessoa', NULL));
+            if(!($this->objPessoa instanceof EntityPessoa)){
+                throw new \RuntimeException('Pessoa não localizada.');
             }
         }
         
-        if(!($this->objPessoaDestino instanceof Pessoa)){
-            $this->objPessoaDestino = $this->objEntityManager->getRepository('Pessoas:Pessoa')->find($objRequest->get('idPessoaDestino', NULL));
-            if(!($this->objPessoaDestino instanceof Pessoa)){
-                throw new \RuntimeException('Pessoa Destino não localizada.');
-            }
+        $this->objPessoaRelacao = $this->objEntityManager->getRepository('App\Entity\Pessoas\Pessoa')->find($objRequest->get('idRelacao', NULL));
+        if(!($this->objPessoaRelacao instanceof EntityPessoa)){
+            throw new \RuntimeException('Relação não localizada.');
         }
     }
     
@@ -131,17 +127,17 @@ class Create
     /**
      * @return \App\Entity\Pessoas\Pessoa
      */
-    public function getPessoaOrigem()
+    public function getPessoa()
     {
-        return $this->objPessoaOrigem;
+        return $this->objPessoa;
     }
     
     /**
      * @return \App\Entity\Pessoas\Pessoa
      */
-    public function getPessoaDestino()
+    public function getPessoaRelacao()
     {
-        return $this->objPessoaDestino;
+        return $this->objPessoaRelacao;
     }
     
     /**
@@ -153,19 +149,19 @@ class Create
     }
     
     /**
-     * @param \App\Entity\Pessoas\Pessoa $objPessoaOrigem
+     * @param \App\Entity\Pessoas\Pessoa $objPessoa
      */
-    public function setPessoaOrigem(\App\Entity\Pessoas\Pessoa $objPessoaOrigem)
+    public function setPessoa(\App\Entity\Pessoas\Pessoa $objPessoa)
     {
-        $this->objPessoaOrigem = $objPessoaOrigem;
+        $this->objPessoa = $objPessoa;
     }
     
     /**
-     * @param \App\Entity\Pessoas\Pessoa $objPessoaDestino
+     * @param \App\Entity\Pessoas\Pessoa $objPessoaRelacao
      */
-    public function setPessoaDestino(\App\Entity\Pessoas\Pessoa $objPessoaDestino)
+    public function setRelacao(\App\Entity\Pessoas\Pessoa $objPessoaRelacao)
     {
-        $this->objPessoaDestino = $objPessoaDestino;
+        $this->objPessoaRelacao = $objPessoaRelacao;
     }
     
     public function save()

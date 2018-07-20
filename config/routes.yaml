@@ -1,3 +1,24 @@
+login:
+    path: /login
+    controller: 'App\Controller\HomeController::login'
+    methods: [POST, GET]
+    defaults:
+        _format: html
+logout:
+    path: /logout
+    controller: 'App\Controller\HomeController::logout'
+    methods: [POST, GET]
+    defaults:
+        _format: html
+auth:
+    path: /auth
+    controller: 'App\Controller\HomeController::auth'
+    methods: [POST]
+    
+home:
+    path: /home
+    controller: 'App\Controller\HomeController::home'
+    methods: [GET]
 pessoa_api:
     prefix: /api/pessoas
     resource: './routes/pessoas/routes.yaml'
