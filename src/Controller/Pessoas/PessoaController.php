@@ -14,7 +14,6 @@ use App\Entity\Pessoas\Pessoa;
 
 class PessoaController extends Controller
 {
-    
     public function postPessoa(Request $objRequest)
     {
         try {
@@ -121,5 +120,6 @@ class PessoaController extends Controller
     {
         return new JsonResponse(['id'=>['patchPessoa']], Response::HTTP_OK);
     }
+    
 }
 
