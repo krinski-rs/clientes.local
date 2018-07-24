@@ -8,5 +8,11 @@
 						</div>
 					</div>
 					<hr />
+{% if attribute(content, 'table') is defined %}
+{% use "base/table/table.html.twig" %}
+{% block block_table %}
+{{ parent(content) }}
+{% endblock %}
+{% endif %}
 				</div>
 			</div>

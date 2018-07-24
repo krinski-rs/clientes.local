@@ -5,10 +5,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use App\Service\Pessoas\Pessoa as PessoaService;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use App\Entity\Pessoas\Pessoa;
 
 class HomeController extends Controller
 {
-    
     public function login(Request $objRequest)
     {
         try {            
@@ -54,7 +59,7 @@ class HomeController extends Controller
     {
         try {
             return $this->render(
-                'site.html.twig',
+                'pessoa/site.html.twig',
                 [
                     'title'     => 'R&K',
                     'top'       => [
@@ -218,7 +223,7 @@ class HomeController extends Controller
                             'icon'  => 'icon-user',
                             'text'  => 'Pessoa Física',
                             'total' => '0',
-                            'class'  => 'panel',
+                            'class'  => 'panel pessoa_fisica',
                             'labelClass'  => 'label-default',
                             'menu'  => []
                         ],
@@ -260,7 +265,7 @@ class HomeController extends Controller
                         ]
                     ],
                     'content'   => [
-                        'title' => 'Dashboard'
+                        'title' => 'Pessoas'
                     ],
                     'info'      => [
                         'list'          => [
@@ -331,6 +336,57 @@ class HomeController extends Controller
                         ]
                     ],
                     'footer'    => '<p>&copy;&nbsp;Reinaldo Krinski&nbsp;2018&nbsp;</p>'
+                ]
+            );
+        } catch (\RuntimeException $e) {
+            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_PRECONDITION_FAILED);
+        } catch (\Exception $e) {
+            return new JsonResponse(['mensagem'=>$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    public function listTable(Request $objRequest)
+    {
+        try {
+            $objPessoasPessoa = $this->get('pessoas.pessoa');
+            if(!$objPessoasPessoa instanceof PessoaService){
+                return new JsonResponse(['message'=> 'Class "App\Service\Pessoas\Pessoa not found."'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            
+            $arrayPessoa = [];
+            $encoders = array(new XmlEncoder(), new JsonEncoder());
+            
+            $objObjectNormalizer = new ObjectNormalizer();
+            
+            $objObjectNormalizer->setCircularReferenceHandler(function (Pessoa $objPessoa) {
+                return $objPessoa->getId();
+            });
+                
+            $callbackDateTime = function ($dateTime) {
+                return $dateTime instanceof \DateTime
+                ? $dateTime->format(\DateTime::ISO8601)
+                : '';
+            };
+            
+            $objObjectNormalizer->setCallbacks(array('dataCadastro' => $callbackDateTime, 'dataAniversario' => $callbackDateTime));
+            $objObjectNormalizer->setCircularReferenceLimit(1);
+            $normalizers = array($objObjectNormalizer);
+            
+            $objSerializer = new Serializer($normalizers, $encoders);
+            $arrayPessoa['body'] = $objSerializer->normalize($objPessoasPessoa->list($objRequest), NULL, ['attributes' =>['id', 'nomes' => ['nome'], 'tipo', 'nacionalidade', 'ativo']]);
+            $arrayPessoa['title'] = $objRequest->get('title', '');
+            $arrayPessoa['id'] = 'chitos';
+            $arrayPessoa['header'] = ['Código', 'Nome', 'Tipo', 'Nacionalidade', 'Status'];
+//             echo '<pre>';
+//             \Doctrine\Common\Util\Debug::dump($arrayPessoa,3);
+//             exit();
+            return $this->render(
+                'base/content.html.twig',
+                [
+                    'content'   => [
+                        'title' => $objRequest->get('title', ''),
+                        'table' => $arrayPessoa,
+                    ]
                 ]
             );
         } catch (\RuntimeException $e) {

@@ -19,6 +19,12 @@ home:
     path: /home
     controller: 'App\Controller\HomeController::home'
     methods: [GET]
+    
+list_table_pessoa:
+    path: /table
+    controller: 'App\Controller\HomeController::listTable'
+    methods: [GET,POST]
+
 pessoa_api:
     prefix: /api/pessoas
     resource: './routes/pessoas/routes.yaml'
