@@ -212,7 +212,7 @@ class HomeController extends Controller
                     ],
                     'menu'      => [
                         [
-                            'href'  => 'http://site.local.com/home',
+                            'href'  => '',
                             'icon'  => 'icon-home',
                             'text'  => 'Home',
                             'class' => 'panel',
@@ -223,9 +223,24 @@ class HomeController extends Controller
                             'icon'  => 'icon-user',
                             'text'  => 'Pessoa Física',
                             'total' => '0',
-                            'class'  => 'panel pessoa_fisica',
+                            'class'  => 'panel',
                             'labelClass'  => 'label-default',
-                            'menu'  => []
+                            'menu'  => [
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Cadastro',
+                                    'class'  => '',
+                                    'menu'  => []
+                                ],
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Listagem',
+                                    'class'  => 'pessoa_fisica',
+                                    'menu'  => []
+                                ]
+                            ]
                         ],
                         [
                             'href'  => '#',
@@ -234,7 +249,22 @@ class HomeController extends Controller
                             'class'  => 'panel',
                             'labelClass'  => 'label-success',
                             'total' => '0',
-                            'menu'  => []
+                            'menu'  => [
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Cadastro',
+                                    'class'  => '',
+                                    'menu'  => []
+                                ],
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Listagem',
+                                    'class'  => '',
+                                    'menu'  => []
+                                ]
+                            ]
                         ],
                         [
                             'href'  => '#',
@@ -243,7 +273,22 @@ class HomeController extends Controller
                             'class'  => 'panel',
                             'labelClass'  => 'label-info',
                             'total' => '0',
-                            'menu'  => []
+                            'menu'  => [
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Cadastro',
+                                    'class'  => '',
+                                    'menu'  => []
+                                ],
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Listagem',
+                                    'class'  => '',
+                                    'menu'  => []
+                                ]
+                            ]
                         ],
                         [
                             'href'  => '#',
@@ -252,7 +297,22 @@ class HomeController extends Controller
                             'class'  => 'panel',
                             'labelClass'  => 'label-danger',
                             'total' => '0',
-                            'menu'  => []
+                            'menu'  => [
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Cadastro',
+                                    'class'  => '',
+                                    'menu'  => []
+                                ],
+                                [
+                                    'href'  => '#',
+                                    'icon'  => 'icon-angle-right',
+                                    'text'  => 'Listagem',
+                                    'class'  => '',
+                                    'menu'  => []
+                                ]
+                            ]
                         ],
                         [
                             'href'  => '#',
