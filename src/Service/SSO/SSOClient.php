@@ -28,10 +28,10 @@ class SSOClient
     const SSO_LOGOUT        = 'http://sso.local.com/auth/logout';
     const SSO_USER_AGENT    = 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.2 (KHTML, like Gecko) Chrome/22.0.1216.0 Safari/537.2';
     const SSO_AUTH_VERSION  = 'V1';
-    const SSO_ORIGIN        = 'http://site.local';
+    const SSO_ORIGIN        = 'http://pessoa.local.com';
     const SSO_API_KEY       = '3ada8f87cef4d41dbb385e41d0d55305b649161b';
     const SSO_COOKIE_NAME   = 'sso';
-    const SSO_COOKIE_DOMAIN = 'local.com';
+    const SSO_COOKIE_DOMAIN = '.local.com';
     
     public function __construct(RequestStack $objRequestStack)
     {
