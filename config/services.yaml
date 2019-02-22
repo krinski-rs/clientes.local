@@ -65,7 +65,7 @@ services:
            
     App\Service\Pessoas\Pessoa:
           public: false
-          arguments: ["@doctrine", "@validator"]
+          arguments: ["@doctrine", "@logger"]
           
     pessoas.pessoa:
           alias: App\Service\Pessoas\Pessoa

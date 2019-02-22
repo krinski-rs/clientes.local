@@ -59,6 +59,7 @@ class SSOAuthEventListener
             if(count($data)){
                 reset($data);
                 while($dado = current($data)){
+                    $this->objLogger->error("POST", array($dado, key($data)));
                     $objRequest->attributes->set(key($data), $dado);
                     next($data);
                 }

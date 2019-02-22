@@ -162,13 +162,6 @@ class Create
                 'maxMessage' => 'O campo não pode ser maior do que {{ limit }} caracteres.'
             ]
         );
-        
-        $objType = new Assert\Type(
-            [
-                'type' => 'bool',
-                'message' => 'O valor \'{{ value }}\' não é válido \'{{ type }}\'.'
-            ]
-        );
 
         $objChoiceNacionalidade = new Assert\Choice(
             [
@@ -191,9 +184,10 @@ class Create
             ]
         );
         
-        $objDate = new Assert\Date(
+        $objDate = new Assert\DateTime(
             [
-                'message' => 'O valor \'{{ value }}\' não é uma data válida.'
+                'message' => 'O valor \'{{ value }}\' não é uma data válida.',
+                'format'  => 'd/m/Y'
             ]
         );
         
