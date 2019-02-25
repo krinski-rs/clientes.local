@@ -21,8 +21,7 @@ class Pessoa
     public function create(Request $objRequest)
     {
         try {
-            $this->objLogger->error('opa', $objRequest->attributes->all());
-            $objPessoasPessoaCreate = new Create($this->objEntityManager);
+            $objPessoasPessoaCreate = new Create($this->objEntityManager, $this->objLogger);
             $objPessoasPessoaCreate->create($objRequest);
             return $objPessoasPessoaCreate->save();
         } catch (\RuntimeException $e){

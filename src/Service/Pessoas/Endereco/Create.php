@@ -9,22 +9,25 @@ use App\Entity\Pessoas\Pessoa;
 use App\Entity\Pessoas\Endereco;
 use App\DBAL\Type\Enum\Vogel\TipoEnderecoPessoaType;
 use App\DBAL\PHP\Spatial\Geometry\Point;
+use Monolog\Logger;
 
 class Create
 {
     private $objEntityManager   = NULL;
     private $objEndereco    = NULL;
     private $objPessoa  = NULL;
+    private $objLogger  = NULL;
     
-    public function __construct(EntityManager $objEntityManager)
+    public function __construct(EntityManager $objEntityManager, Logger $objLogger)
     {
         $this->objEntityManager = $objEntityManager;
+        $this->objLogger = $objLogger;
     }
     
     public function create(Request $objRequest)
     {
         try {
-            
+            $this->objLogger->error("PAIS", [trim($objRequest->get('pais', NULL))]);
             $this->validate($objRequest);
             $this->objEndereco = new Endereco();
             $this->objEndereco->setBairro(trim($objRequest->get('bairro', NULL)));

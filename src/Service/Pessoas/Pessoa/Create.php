@@ -12,15 +12,18 @@ use App\Service\Pessoas\Nome\Create as CreateNome;
 use App\Service\Pessoas\Endereco\Create as CreateEndereco;
 use App\Service\Pessoas\Documento\Create as CreateDocumento;
 use App\Service\Pessoas\PessoaToPessoa\Create as CreateRelacionamento;
+use Monolog\Logger;
 
 class Create
 {
     private $objEntityManager   = NULL;
     private $objPessoa    = NULL;
+    private $objLogger    = NULL;
     
-    public function __construct(EntityManager $objEntityManager)
+    public function __construct(EntityManager $objEntityManager, Logger $objLogger)
     {
         $this->objEntityManager = $objEntityManager;
+        $this->objLogger = $objLogger;
     }
     
     private function createNomes(Request $objRequest)
@@ -52,7 +55,7 @@ class Create
         try {
             $arrayEnderecos = $objRequest->get('enderecos', NULL);
             
-            $objCreateEndereco = new CreateEndereco($this->objEntityManager);
+            $objCreateEndereco = new CreateEndereco($this->objEntityManager, $this->objLogger);
             $objCreateEndereco->setPessoa($this->objPessoa);
             
             reset($arrayEnderecos);
@@ -103,19 +106,20 @@ class Create
     {
         try {
             $arrayRelacionamentos = $objRequest->get('relacionamentos', NULL);
-            
-            $objCreateRelacionamento = new CreateRelacionamento($this->objEntityManager);
-            $objCreateRelacionamento->setPessoa($this->objPessoa);
-            
-            reset($arrayRelacionamentos);
-            while($relacionamento = current($arrayRelacionamentos)){
-                $objCreateRelacionamento->create(new Request([], [], $relacionamento));
-                $this->objPessoa->addRelacao($objCreateRelacionamento->getPessoaToPessoa());
-                next($arrayRelacionamentos);
-            }
-            
-            if($this->objPessoa->getRelacao()->count() != count($arrayRelacionamentos)){
-                throw new \RuntimeException('Erro ao inserir os relacionamentos.');
+            if(count($arrayRelacionamentos)){
+                $objCreateRelacionamento = new CreateRelacionamento($this->objEntityManager);
+                $objCreateRelacionamento->setPessoa($this->objPessoa);
+                
+                reset($arrayRelacionamentos);
+                while($relacionamento = current($arrayRelacionamentos)){
+                    $objCreateRelacionamento->create(new Request([], [], $relacionamento));
+                    $this->objPessoa->addRelacao($objCreateRelacionamento->getPessoaToPessoa());
+                    next($arrayRelacionamentos);
+                }
+                
+                if($this->objPessoa->getRelacao()->count() != count($arrayRelacionamentos)){
+                    throw new \RuntimeException('Erro ao inserir os relacionamentos.');
+                }
             }
             
         } catch (\RuntimeException $e){
@@ -132,14 +136,14 @@ class Create
                         
             $this->objPessoa = new Pessoa();
             $this->objPessoa->setAtivo($objRequest->get('ativo', NULL));
-            $this->objPessoa->setDataAniversario(\DateTime::createFromFormat('Y-m-d H:i:s', $objRequest->get('dataAniversario', NULL).' 00:00:00'));
+            $this->objPessoa->setDataAniversario(\DateTime::createFromFormat('Y-m-d H:i:s', $objRequest->get('dataAniversario', NULL)));
             $this->objPessoa->setDataCadastro(new \DateTime());
             $this->objPessoa->setNacionalidade($objRequest->get('nacionalidade', NULL));
             $this->objPessoa->setTipo($objRequest->get('tipo', NULL));
             $this->createNomes($objRequest);
             $this->createDocumentos($objRequest);
             $this->createEnderecos($objRequest);
-            $this->createRelacionamento($objRequest);
+//             $this->createRelacionamento($objRequest);
         } catch (\RuntimeException $e){
             throw $e;
         } catch (\Exception $e){
@@ -186,8 +190,7 @@ class Create
         
         $objDate = new Assert\DateTime(
             [
-                'message' => 'O valor \'{{ value }}\' não é uma data válida.',
-                'format'  => 'd/m/Y'
+                'message' => 'O valor \'{{ value }}\' não é uma data válida.'
             ]
         );
         
@@ -265,8 +268,10 @@ class Create
             'ativo'                 => $objRequest->get('ativo', NULL),
             'nomes'                 => $objRequest->get('nomes', NULL),
             'enderecos'             => $objRequest->get('enderecos', NULL),
-            'documentos'             => $objRequest->get('documentos', NULL)
+            'documentos'            => $objRequest->get('documentos', NULL)
         ];
+        
+        $this->objLogger->error('opa', $objRequest->attributes->all());
         
         $objConstraintViolationList = $objRecursiveValidator->validate($data, $objCollection);
         
