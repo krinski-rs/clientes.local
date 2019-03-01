@@ -56,13 +56,11 @@ class SSOAuthEventListener
         
         if ($objRequest->headers->get('content-type') == 'application/json') {
             $data = json_decode($objGetResponseEvent->getRequest()->getContent(), true);
-            $this->objLogger->error("POSTqqqqq", array($data));
             $total = 0;
             if(count($data)){
                 reset($data);
                 while($total < count($data)){
                     $dado = current($data);
-                    $this->objLogger->error("POST", array($dado, key($data)));
                     $objRequest->attributes->set(key($data), $dado);
                     $total++;
                     next($data);
